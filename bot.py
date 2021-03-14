@@ -4,14 +4,11 @@ from const import token
 import localize
 from re import match
 import random
-from katakana import katakana
-from hiragana import hirogana
+from letters import katakana, hirogana
 
 bot = telebot.TeleBot(token)
 
 users_stat = {} #format user_id: {'answer': '', streak: 0}
-
-
 
 return_to_main_markup = types.InlineKeyboardMarkup()
 back_button = types.InlineKeyboardButton('Назад', callback_data='start')
@@ -42,8 +39,8 @@ def start_handler(message):
     bot.send_message(message.from_user.id, localize.start_message[lang], reply_markup=markup)
 
 
-@bot.callback_query_handler(func=lambda call:match('transcrypt', call.data))
-def to_transcrypt(call):
+@bot.callback_query_handler(func=lambda call: match('transcrypt', call.data))
+def to_transcrypt(call, right=False):
     print('Кто-то что-то тычет', call.from_user.username)
     t, streak, lang = call.data.split('_')
     print(call.data)
